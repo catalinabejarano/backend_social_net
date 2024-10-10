@@ -20,19 +20,19 @@ const puerto = process.env.PORT || 3900;
 
 // Configurar cors para que acepte peticiones del frontend
 app.use(cors({
-  origin: '*',
+  origin: '*',  //acepta solicitudes desde cualquier IP 
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  preflightContinue: false,
-  optionsSuccessStatus: 204
+  preflightContinue: false, //Antes de aceptar una peticion valida que sea de una persona o no un BOT  
+  optionsSuccessStatus: 204  //Especificar codigo de status exitosos 
 }));
 
 // Decodificar los datos desde los formularios para convertirlos en objetos de JavaScript
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));  //Enviarle opciones a las peticiones 
 
 // Configurar rutas del aplicativo (módulos)
-app.use('/api/user', UserRoutes);
-app.use('/api/publication', PublicationRoutes);
+app.use('/api/user', UserRoutes);   //Login, Registrarse
+app.use('/api/publication', PublicationRoutes);   
 app.use('/api/follow', FollowRoutes);
 
 // Configurar el servidor de Node
