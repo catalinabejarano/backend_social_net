@@ -7,26 +7,26 @@ import mongoosePaginate from "mongoose-paginate-v2";  //Ayuda con la paginacion 
 const UserSchema = Schema ({
   name: {
     type: String,
-    require: true
+    required: true
   },
   last_name: {
     type: String,
-    require: true
+    required: true
   },
   nick: {
     type: String,
-    require: true,
+    required: true,
     unique: true
   },
   email: {
     type: String,
-    require: true,
+    required: true,
     unique: true
   },
   bio: String,
   password: {
     type: String,
-    require: true
+    required: true
   },
   role: {
     type: String,
