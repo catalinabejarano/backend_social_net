@@ -1,6 +1,7 @@
 
 import User from '../models/users.js';
 import bcrypt from 'bcrypt';
+import { createToken } from '../services/jwt.js';
 
 // Método de prueba del controlador user
 export const testUser = (req, res) => {
@@ -110,14 +111,24 @@ export const login = async (req, res) => {
    });
  }
 
- // Generar token de autenticación (JWT)
- 
+     // Generar token de autenticación (JWT)
+     const token = createToken(userBD);
 
-    // Devolver respuesta de login exitoso
-    return res.status(200).json({
-      status: "success",
-      message: "Autenticación exitosa"
-    });
+     // Devolver respuesta de login exitoso
+     return res.status(200).json({
+       status: "success",
+       message: "Autenticación exitosa",
+       token,
+       userBD: {
+         id: userBD._id,
+         name: userBD.name,
+         last_name: userBD.last_name,
+         email: userBD.email,
+         nick: userBD.nick,
+         image: userBD.image
+       }
+     });
+ 
 
   } catch (error) {
     console.log("Error en la autenticación del usuario: ", error);
