@@ -76,6 +76,43 @@ export const register = async (req, res) => {
 // Método de Login (usar JWT)
 export const login = async (req, res) => {
   try {
+
+ // Obtener los parámetros del body (enviados en la petición)
+ let params = req.body;
+
+ // Validar que si recibimos el email y el password
+ if (!params.email || !params.password) {
+   return res.status(400).send({
+     status: "error",
+     message: "Faltan datos por enviar"
+   });
+ }
+
+ // Buscar en la BD si existe el email registrado
+ const userBD = await User.findOne({ email: params.email.toLowerCase() });
+
+ // Si no existe el usuario buscado
+ if (!userBD) {
+   return res.status(404).send({
+     status: "error",
+     message: "Usuario no encontrado"
+   });
+ }
+
+ // Comprobar su contraseña
+ const validPassword = await bcrypt.compare(params.password, userBD.password);
+
+ // Si la contraseña es incorrecta (false)
+ if (!validPassword) {
+   return res.status(401).send({
+     status: "error",
+     message: "Contraseña incorrecta"
+   });
+ }
+
+ // Generar token de autenticación (JWT)
+ 
+
     // Devolver respuesta de login exitoso
     return res.status(200).json({
       status: "success",
