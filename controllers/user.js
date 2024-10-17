@@ -1,3 +1,4 @@
+
 import User from '../models/users.js';
 import bcrypt from 'bcrypt';
 
@@ -44,7 +45,7 @@ export const register = async (req, res) => {
     // Cifrar la contraseña
     // Genera los saltos para encriptar
     const salt = await bcrypt.genSalt(10);
-    
+
     // Encriptar la contraseña y guardarla en hashedPassword
     const hashedPassword = await bcrypt.hash(user_to_save.password, salt);
 
@@ -55,9 +56,9 @@ export const register = async (req, res) => {
     await user_to_save.save();
 
     // Devolver el usuario registrado
-    return res.status(200).json({
+    return res.status(201).json({
+      status: "created",
       message: "Registro de usuario exitoso",
-      params,
       user_to_save
     });
 
@@ -67,6 +68,26 @@ export const register = async (req, res) => {
     return res.status(500).send({
       status: "error",
       message: "Error en el registro de usuario"
+    });
+  }
+};
+
+
+// Método de Login (usar JWT)
+export const login = async (req, res) => {
+  try {
+    // Devolver respuesta de login exitoso
+    return res.status(200).json({
+      status: "success",
+      message: "Autenticación exitosa"
+    });
+
+  } catch (error) {
+    console.log("Error en la autenticación del usuario: ", error);
+    // Devolver mensaje de error
+    return res.status(500).send({
+      status: "error",
+      message: "Error en la autenticación del usuario"
     });
   }
 };
