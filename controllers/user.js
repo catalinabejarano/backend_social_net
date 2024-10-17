@@ -1,4 +1,5 @@
-import User from '../models/users.js'
+import User from '../models/users.js';
+import bcrypt from 'bcrypt';
 
 // Método de prueba del controlador user
 export const testUser = (req, res) => {
@@ -41,6 +42,14 @@ export const register = async (req, res) => {
     }
 
     // Cifrar la contraseña
+    // Genera los saltos para encriptar
+    const salt = await bcrypt.genSalt(10);
+    
+    // Encriptar la contraseña y guardarla en hashedPassword
+    const hashedPassword = await bcrypt.hash(user_to_save.password, salt);
+
+    // Asignar la contraseña encriptada al objeto del usauario
+    user_to_save.password = hashedPassword;
 
     // Guardar el usuario en la base de datos
     await user_to_save.save();
