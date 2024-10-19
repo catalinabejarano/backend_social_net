@@ -15,6 +15,7 @@ export const register = async (req, res) => {
   try {
     // Obtener los datos de la petición
     let params = req.body;
+    
 
     // Validar los datos obtenidos (que los datos obligatorios existan)
     if(!params.name || !params.last_name || !params.nick || !params.email || !params.password) {
@@ -139,3 +140,4 @@ export const login = async (req, res) => {
     });
   }
 };
+

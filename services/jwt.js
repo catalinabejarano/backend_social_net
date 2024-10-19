@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 //CARGAR variables de Entorno desde .ENV
 dotenv.config();
 
-// Clave secreta
+// Clave secreta invocada
 const secret = process.env.SECRET_KEY;
 
 // Método para generar tokens
