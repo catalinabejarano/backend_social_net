@@ -179,6 +179,52 @@ export const profile = async (req, res) => {
       message: "Error al obtener el perfil del usuario"
     });
   }
-}
+};
+
+  
+// Método para Listar los usuarios
+export const listUsers = async (req, res) => {
+  try {
+    // Gestionar la paginación
+    // 1. Controlar la página actual
+    let page = req.params.page ? parseInt(req.params.page, 10) : 1;
+
+    // 2. Configurar los ítems por página a mostrar
+    let itemsPerPage = req.query.limit ? parseInt(req.query.limit, 10) : 4;
+
+    // Realizar consulta paginada
+    const options = {
+      page: page,
+      limit: itemsPerPage,
+      select: '-password -email -role -__v'
+    };
+
+    const users = await User.paginate({}, options);
+
+    // Si no existen usuarios en la BD disponibles
+    if(!users || users.docs.length === 0){
+      return res.status(404).send({
+        status: "error",
+        message: "No existen usuarios disponibles"
+      });
+    }
+
+    // Devolver los usuarios paginados
+    return res.status(200).json({
+      status: "success",
+      users: users.docs,
+      totalDocs: users.totalDocs,
+      totalPages: users.totalPages,
+      CurrentPage: users.page
+    });
+
+  } catch (error) {
+    console.log("Error al listar los usuarios: ", error);
+    return res.status(500).send({
+      status: "error",
+      message: "Error al listar los usuarios"
+    });
+  }
+};
 
 
