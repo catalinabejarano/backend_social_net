@@ -15,7 +15,7 @@ export const ensureAuth = (req, res, next) => {
     });
   }
 
-  // Limpiar el token y quitar comillas i las hay
+  // Limpiar el token y quitar comillas si las hay
   const token = req.headers.authorization.replace(/['"]+/g, '').replace("Bearer ", "");
 
   try {
