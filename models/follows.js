@@ -2,12 +2,12 @@ import { Schema, model } from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
 
 const FollowSchema = Schema({
-  following_user: {
+  following_user: {    //usuario que hace el follow
     type: Schema.ObjectId,
     ref: "User",
     required: true
   },
-  followed_user: {
+  followed_user: {       ///usuario que se desea seguir
     type: Schema.ObjectId,
     ref: "User",
     required: true

@@ -35,6 +35,7 @@ app.use('/api/user', UserRoutes);   //Login, Registrarse
 app.use('/api/publication', PublicationRoutes);   
 app.use('/api/follow', FollowRoutes);
 
+
 // Configurar el servidor de Node
 app.listen(puerto, () => {
   console.log("Servidor de Node ejecutándose en el puerto", puerto);
