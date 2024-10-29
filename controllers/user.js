@@ -2,6 +2,9 @@
 import User from '../models/users.js';
 import bcrypt from 'bcrypt';
 import { createToken } from '../services/jwt.js';
+import Follow from '../models/follows.js';
+import Publication from '../models/publications.js';
+import { followThisUser, followUserIds } from '../services/followServices.js';
 
 // Método de prueba del controlador user
 export const testUser = (req, res) => {
@@ -166,10 +169,15 @@ export const profile = async (req, res) => {
       });
     }
 
+
+    // Información de seguimiento: id del usuario identificado (req.user.userId) y el id del usuario del perfil que queremos consultar (userId = req.params.id)
+    const followInfo = await followThisUser(req.user.userId, userId);
+
     // Devolver la información del perfil del usuario solicitado
     return res.status(200).json({
       status: "success",
-      user: userProfile
+      user: userProfile,
+      followInfo
     });
 
   } catch (error) {
